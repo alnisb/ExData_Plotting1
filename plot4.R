@@ -2,15 +2,17 @@
 # Produce plot4.png as per visual spec in Course Project 1 of
 # Exploratory Data Analysis at Johns Hopkins.
 
-# Need to download source data from 
-# https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip
-# and unzip into local folder.
-
 plot4 <- function()  {
     
     # load up data, sqldf is an elegant solution to get only what we need
-    # Source data unpacked in working folder on GitHub
     library(sqldf)
+    library(utils)
+    
+    url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+    destination <- "exdata_data_household_power_consumption.zip"
+    download.file(url, destination)    
+    unzip(destination)
+    
     measures <- read.csv.sql("household_power_consumption.txt", 
                              sql = "select * from file where Date in ('1/2/2007', '2/2/2007')",
                              sep = ";", header = TRUE)  
